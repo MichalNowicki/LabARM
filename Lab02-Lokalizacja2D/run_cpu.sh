@@ -13,6 +13,7 @@ XAUTH=/tmp/.docker.xauth
      chmod a+r $XAUTH
  fi
 
+docker stop ARM_02 || true && docker rm ARM_01 || true
 
 docker run -it \
     --env="DISPLAY=$DISPLAY" \
@@ -20,8 +21,6 @@ docker run -it \
     --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
     --env="XAUTHORITY=$XAUTH" \
     --volume="$XAUTH:$XAUTH" \
-    --env="NVIDIA_VISIBLE_DEVICES=all" \
-    --env="NVIDIA_DRIVER_CAPABILITIES=all" \
     --privileged \
     --network=host \
     --name="ARM_02" \
