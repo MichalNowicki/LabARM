@@ -1,4 +1,4 @@
-FROM osrf/ros:noetic-desktop-full 
+FROM ros:melodic-perception
 
 # SETUP ENVS
 ENV LANG=C.UTF-8
@@ -10,7 +10,7 @@ ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPA
 # INSTALL SOME ESSENTIAL PROGRAMS
 RUN apt-get update     && \
     apt-get install -y    \
-        git wget libpcl-dev cmake libgoogle-glog-dev libatlas-base-dev libeigen3-dev libsuitesparse-dev && \
+        git wget libpcl-dev cmake libgoogle-glog-dev libatlas-base-dev libeigen3-dev libsuitesparse-dev ros-melodic-rviz && \
     rm -rf /var/lib/apt/lists/*
 
 # CERES
@@ -22,7 +22,7 @@ RUN mkdir ceres-bin
 WORKDIR /ceres/ceres-bin
 RUN cmake ../ceres-solver-1.14.0
 RUN make -j3
-RUN make test
+#RUN make test
 RUN make install
 
 # CREATE CATKIN WS
@@ -30,7 +30,7 @@ RUN mkdir -p /catkin_ws/src/
 WORKDIR /catkin_ws
 
 # BUILD WORKSPACE
-RUN /bin/bash -c ". /opt/ros/noetic/setup.bash; catkin_make"
+RUN /bin/bash -c ". /opt/ros/${ROS_DISTRO}/setup.bash; catkin_make"
 
 # FILL BASHRC
 RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
