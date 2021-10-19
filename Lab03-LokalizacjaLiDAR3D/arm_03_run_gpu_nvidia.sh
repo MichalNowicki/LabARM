@@ -17,6 +17,8 @@ XAUTH=/tmp/.docker.xauth
      chmod a+r $XAUTH
  fi
 
+docker stop ARM_03 || true && docker rm ARM_03 || true
+
 docker run -it \
     --gpus all \
     --env="DISPLAY=$DISPLAY" \
