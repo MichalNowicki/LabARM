@@ -13,7 +13,7 @@ XAUTH=/tmp/.docker.xauth
      chmod a+r $XAUTH
  fi
 
-docker stop ARM_02 || true && docker rm ARM_01 || true
+docker stop ARM_02 || true && docker rm ARM_02 || true
 
 docker run -it \
     --env="DISPLAY=$DISPLAY" \
